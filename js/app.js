@@ -15,12 +15,33 @@ $(document).ready(function() {
 
   map.add(po.compass().pan("none"));
 
+  var places2geojson = function(places) {
+    var geojson = _.chain(places)
+      .filter(function(el) {
+        return el.me === true;
+      })
+      .map(function(el, i, list) {
+        return {
+          geometry: {
+            coordinates: [el.lng, el.lat],
+            type: "Point"
+          },
+          properties: {
+            from: el.from,
+            network: el.network,
+            at: el.at
+          }
+        };
+      }).value();
+    return geojson;
+  };
+
   var client = new APIClient();
-  // get some photos
-  client.getJSON('/Me/places', {limit: 10}, function(places) {
-    console.log(places);
-    map.add(po.geoJson()
-            .features([{geometry: {coordinates: [-122.258, 37.805], type: "Point"}}]));
+  // get some places
+  client.getJSON('/Me/places', {limit: 2000}, function(places) {
+    console.log(places.length);
+    var points = places2geojson(places);
+    console.log(points.length);
   });
 
 });
