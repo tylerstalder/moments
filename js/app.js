@@ -36,12 +36,17 @@ $(document).ready(function() {
     return geojson;
   };
 
+  var addTitle = po.stylist().title(function(d){
+    console.log(d.properties.from, d.properties.network);
+    return d.properties.from;});
+
   var client = new APIClient();
   // get some places
   client.getJSON('/Me/places', {limit: 2000}, function(places) {
     console.log(places.length);
     var points = places2geojson(places);
     console.log(points.length);
+    map.add(po.geoJson().features(points).on('load',addTitle));
   });
 
 });
