@@ -37,7 +37,6 @@ $(document).ready(function() {
   };
 
   var addTitle = po.stylist().title(function(d){
-    console.log(d.properties.from, d.properties.network);
     return d.properties.from;});
 
   var client = new APIClient();
