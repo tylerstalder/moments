@@ -29,7 +29,8 @@ $(document).ready(function() {
           properties: {
             from: el.from,
             network: el.network,
-            at: el.at
+            at: el.at,
+            title: el.title
           }
         };
       }).value();
@@ -37,7 +38,8 @@ $(document).ready(function() {
   };
 
   var addTitle = po.stylist().title(function(d){
-    return d.properties.from;});
+    return d.properties.from + ' ' + d.properties.title;
+  });
 
   var client = new APIClient();
   // get some places
