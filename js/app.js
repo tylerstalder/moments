@@ -1,16 +1,4 @@
 $(document).ready(function() {
-  /*
-  var client = new APIClient();
-  // get some photos
-  client.getJSON('/Me/photos', {limit: 10}, function(photos) {
-    console.log('found ' + photos.length + ' photos');
-    // add them to the DOM
-    for(var i in photos) {
-      console.log('photo #' + i, photos[i]);
-      $('body').append('<img src="' + photos[i].url + '">');
-    }
-  });
-  */
 
   var po = org.polymaps;
 
@@ -19,13 +7,21 @@ $(document).ready(function() {
   .add(po.interact())
   .add(po.hash());
 
-  map.add(po.image()
-          .url(po.url("http://{S}tile.cloudmade.com"
-                      + "/3ed7d953543745549ec8036186c45f80"
-                      + "/37159/256/{Z}/{X}/{Y}.png")
-                      .hosts(["a.", "b.", "c.", ""])));
+  var tileUrl = "http://{S}tile.cloudmade.com/3ed7d953543745549ec8036186c45f80/37159/256/{Z}/{X}/{Y}.png";
 
-                      map.add(po.compass()
-                              .pan("none"));
+  map.add(po.image()
+          .url(po.url(tileUrl)
+          .hosts(["a.", "b.", "c.", ""])));
+
+  map.add(po.compass().pan("none"));
+
+  var client = new APIClient();
+  // get some photos
+  client.getJSON('/Me/places', {limit: 10}, function(places) {
+    console.log(places);
+    map.add(po.geoJson()
+            .features([{geometry: {coordinates: [-122.258, 37.805], type: "Point"}}]));
+  });
+
 });
 
