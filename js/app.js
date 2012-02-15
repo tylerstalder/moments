@@ -1,14 +1,68 @@
 $(document).ready(function() {
-  var po = org.polymaps,
-      map,
+  var po = org.polymaps;
+
+  var map,
+      timeline = [],
       tileUrl,
       place2geojson,
       currentLayer = {},
+      placesByMonth,
+      months,
       addTitle,
       replaceLayer,
       processData,
       client = new APIClient(),
-      panMap;
+      panMap,
+      prettyMonth;
+
+  /*** Timeline ***/
+
+  // new moment handler
+  $('#new-moment').parent().click(function(e) {
+    // create new instance
+    var newMoment = Object.create(Moment);
+
+    // Current month values
+    var monthId = months[$("#slider").slider('value')];
+    var currentMonth = prettyMonth(monthId);
+
+    // Identity counter
+    var nextIndex = timeline.length;
+
+    // Setup the moment and attaches all the events
+    newMoment.init(nextIndex, monthId, currentMonth);
+
+    // Store the current map view
+    newMoment.setGeo(map.extent());
+
+    timeline.push(newMoment);
+
+    // Only show the new moment popover
+    newMoment.show();
+    hideExcept(newMoment.id);
+
+    // set the state back for this moment
+    // this only allows 1 popup at a time
+    $(newMoment.$el).on('show', function(e, moment) {
+      hideExcept(moment.id);
+      map.extent(moment.bbox);
+      $('#slider').slider('value', months.indexOf(moment.monthId));
+    });
+  });
+
+  // Hides all the moments except for index it's passed
+  hideExcept = function(i) {
+    _.each(timeline, function(el) {
+      if (i !== el.id) el.hide();
+    });
+  };
+
+  // date utils come from jQuery UI's calendar picker
+  prettyMonth = function(monthKey) {
+    var yymm = parseInt(monthKey, 10) + 1;
+    var date = $.datepicker.parseDate('yymmdd', yymm + '01');
+    return $.datepicker.formatDate("M ''y", date);
+  };
 
 
   /*** Map ***/
@@ -61,10 +115,6 @@ $(document).ready(function() {
   processData = function(places) {
     return  _.chain(places)
 
-      // only allow my places
-      .filter(function(el) {
-        return el.me === true; })
-
       // sort by the place date
       .sortBy(function(el) {
         return el.at; })
@@ -83,6 +133,7 @@ $(document).ready(function() {
       .value();
   };
 
+  // converting to a subset of the Geojson standard
   place2geojson = function(place) {
     return {
       geometry: {
@@ -99,17 +150,16 @@ $(document).ready(function() {
   };
 
 
-  client.getJSON('/Me/places', {limit: 2000}, function(places) {
-  // get some places
-    console.log(places.length);
-    var placesByMonth = processData(places);
-
-    var months = _.keys(placesByMonth);
+  client.getJSON('/query/getPlace?terms=[(me:true)]', {limit: 1000}, function(places) {
+    // get some places
+    placesByMonth = processData(places);
+    months = _.keys(placesByMonth);
 
     sliderChange = function() {
       return function(event, ui) {
         replaceLayer(placesByMonth[months[ui.value]]);
-        $('.ui-slider-handle').html(months[ui.value]);
+        var label = prettyMonth(months[ui.value]);
+        $('.ui-slider-handle').html(label);
       };
     };
 
