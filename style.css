@@ -1,0 +1,68 @@
+body div.navbar {
+  margin: 0; }
+
+div.navbar-inner {
+  -webkit-border-radius: 0;
+  border-radius: 0; }
+
+#controls {
+  width: 100%;
+  margin-top: -100px; }
+
+#slider {
+  margin-left: 20px;
+  margin-right: 20px; }
+
+circle {
+  fill:#288DB1;
+  stroke:#55A3D9; }
+
+.ui-slider a.ui-slider-handle {
+  padding: 0 4px 0 4px;
+  width: auto;
+  text-decoration: none; }
+
+#moment-drawer {
+  width: 30px;
+  position: absolute;
+  margin-right: 50px;
+  margin-top: 40px;
+  right: 0; }
+
+#moment-drawer a {
+  text-decoration: none;
+  color: white; }
+
+#moment-drawer #new-moment {
+  font-size: 22px;
+  line-height: 25px; }
+
+#moment-drawer div {
+  height:30px;
+  width:30px;
+  background:black;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  box-shadow: 0 1px 2px #eee;
+  margin-left:25%;
+  margin-top:25%;
+  margin-bottom: 20px;
+  color:white;
+  -webkit-user-select: none;
+  user-select: none;
+  text-align: center;
+  line-height: 30px; }
+
+#moment-drawer div:hover {
+  cursor: pointer;
+  background: #288DB1; }
+
+#moment-drawer div.open {
+  background: #288DB1; }
+
+.popover.left {
+  margin-left: -15px; }
+
+.tooltip.left {
+  margin-left: -15px; }
+
