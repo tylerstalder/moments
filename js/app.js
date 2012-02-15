@@ -1,8 +1,10 @@
+var map = {};
+
 $(document).ready(function() {
   var po = org.polymaps;
 
-  var map,
-      timeline = [],
+  //var map,
+  var timeline = [],
       tileUrl,
       place2geojson,
       currentLayer = {},
@@ -70,9 +72,10 @@ $(document).ready(function() {
   // initialize the map
   map = po.map()
   .container(document.getElementById("map").appendChild(po.svg("svg")))
-  .add(po.interact())
-  .add(po.hash());
+  .add(po.interact());
 
+  map.center({lat: '32.00180605938799', lon: '-99.5679175'}).zoom(3);
+  
   tileUrl = "http://{S}tile.cloudmade.com/3ed7d953543745549ec8036186c45f80/37159/256/{Z}/{X}/{Y}.png";
 
   map.add(po.image()
@@ -149,6 +152,9 @@ $(document).ready(function() {
     };
   };
 
+
+  // Modal window
+  $('.modal').modal({backdrop:false});
 
   client.getJSON('/query/getPlace?terms=[(me:true)]', {limit: 1000}, function(places) {
     // get some places

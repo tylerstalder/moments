@@ -8,17 +8,42 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="#">Moments</a>
+          <ul class="nav pull-right">
+            <li><a href="#modal" data-toggle="modal">Help</a></li>
+          </ul>
         </div>
       </div>
     </div>
+
     <div id="moment-drawer">
-      <div><a id="new-moment" href="#">+</a></div>
+      <div><a id="new-moment" href="#" title="Add a Moment">+</a></div>
     </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Welcome to Moments</h3>
+      </div>
+      <div class="modal-body">
+        <p>Use your data to tell a story about the places you've been.</p>
+        <ol>
+          <li>The slider at the bottom lets you browse through places in time.</li>
+          <li>You can move the map by dragging and scrolling.</li>
+          <li>Once you've framed the perfect moment click the +</li>
+        </ol>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+      </div>
+    </div>
+
    <div id="map"></div>
+
     <div id="controls">
       <div id="slider"></div>
     </div>
@@ -26,6 +51,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
     <script src="https://singly.com/js/api.js" type="text/javascript"></script>
+    <script src="js/bootstrap-modal.js"></script>
     <script src="js/bootstrap-tooltip.js"></script>
     <script src="js/bootstrap-popover.js"></script>
     <script src="js/underscore.min.js"></script>
