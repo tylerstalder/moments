@@ -1,10 +1,8 @@
-var map = {};
-
 $(document).ready(function() {
   var po = org.polymaps;
 
-  //var map,
-  var timeline = [],
+  var map,
+      timeline = [],
       tileUrl,
       place2geojson,
       currentLayer = {},
