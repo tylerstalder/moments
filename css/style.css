@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'CubanoRegular';
+    src: url('cubano/cubano-regular-webfont.eot');
+    src: url('cubano/cubano-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('cubano/cubano-regular-webfont.woff') format('woff'),
+         url('cubano/cubano-regular-webfont.ttf') format('truetype'),
+         url('cubano/cubano-regular-webfont.svg#CubanoRegular') format('svg');
+    font-weight: normal;
+    font-style: normal; }
+
 body div.navbar {
   margin: 0; }
 
@@ -10,17 +20,22 @@ div.navbar-inner {
   margin-top: -100px; }
 
 #slider {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   margin-left: 20px;
   margin-right: 20px; }
+
+#slider .ui-widget-content {
+  background: #2C2C2C; }
 
 circle {
   fill:#288DB1;
   stroke:#55A3D9; }
 
 .ui-slider a.ui-slider-handle {
-  padding: 2px 4px 2px 4px;
+  padding: 0px 6px 0px 6px;
   width: auto;
-  text-decoration: none; }
+  text-decoration: none;
+  line-height: 14px; }
 
 #moment-drawer {
   width: 30px;
@@ -40,7 +55,7 @@ circle {
 #moment-drawer div {
   height:30px;
   width:30px;
-  background:black;
+  background:#2C2C2C;
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
   box-shadow: 0 1px 2px #eee;
@@ -59,6 +74,23 @@ circle {
 
 #moment-drawer div.open {
   background: #288DB1; }
+
+#playback-title-cont {
+  display:none; }
+
+#playback-title {
+  position: absolute;
+  width: 100%;
+  top: 40%;
+  text-align: center; }
+
+#playback-title h1 {
+  font-size: 60px;
+  line-height: 60px;
+  color: #2c2c2c;;
+  text-shadow: #2C2C2C 0 1px 4px;
+  -webkit-text-stroke: 1px white;
+  font-family: CubanoRegular; }
 
 .popover.left {
   margin-left: -15px; }
