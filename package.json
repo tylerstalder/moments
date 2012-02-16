@@ -1,0 +1,12 @@
+{
+  "name": "moments",
+  "version": "0.0.0",
+  "description": "Tell a story using the places you've been",
+  "repository": {
+    "title": "Moments",
+    "uses": {
+      "types": [ "places" ],
+      "services": [ "twitter", "foursquare" ]
+    }
+  }
+}
