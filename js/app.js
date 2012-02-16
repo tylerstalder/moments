@@ -156,7 +156,7 @@ $(document).ready(function() {
 
   // sets title from geojson properties
   addTitle = po.stylist().title(function(d){
-    return d.properties.from + ' ' + d.properties.title;
+    return d.properties.title;
   });
 
   // replaces current layer with a new array of features
