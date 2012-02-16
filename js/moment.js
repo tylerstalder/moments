@@ -20,7 +20,7 @@ var Moment = {
     // tooltip and popover will load values from the data attributes
     this.$el.data({
       'title': this.month,
-      content: '<input id="' + this.inputId + '"  type="text" value="" placeholder="What happened?">'
+      content: '<input id="' + this.inputId + '"  type="text" value="" placeholder="What happened here?">'
     });
 
     // attach the bootstrap plugins to the handle
