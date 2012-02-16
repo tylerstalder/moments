@@ -13,6 +13,8 @@ $(document).ready(function() {
       processData,
       client = new APIClient(),
       panMap,
+      mapControls,
+      isPlaying,
       prettyMonth;
 
   /*** Timeline ***/
@@ -50,6 +52,10 @@ $(document).ready(function() {
     });
   });
 
+  $('#map').click(function(e) {
+    hideExcept();
+  });
+
   // Hides all the moments except for index it's passed
   hideExcept = function(i) {
     _.each(timeline, function(el) {
@@ -64,38 +70,88 @@ $(document).ready(function() {
     return $.datepicker.formatDate("M ''y", date);
   };
 
+  /*** Playback ***/
+  //TODO: Clean up needed
+  $('#play-button').click(function(e) {
+
+    // hide app controls
+    $('#moment-drawer').fadeOut();
+    $('#controls').fadeOut();
+
+    // disable map interactivity
+    map.remove(mapControls);
+
+    // set map to default view
+    map.center({lat: '32.00180605938799', lon: '-99.5679175'}).zoom(3);
+    console.log(map.extent());
+
+    // play the moments
+
+    var moment = 0;
+    var len = timeline.length;
+
+    var title = $('#playback-title');
+    var slider = $('#slider');
+
+    title.parent().delay(500);
+
+    var play = function() {
+      if (moment < len) {
+        // set title and subtitle
+        title.html(timeline[moment].momentText);
+        $('#playback-month').html(timeline[moment].month);
+
+        // adjusting the slider changes which points are displayed
+        slider.slider('value', months.indexOf(timeline[moment].monthId));
+
+        // jquery animation queue for playing the moments
+        title.parent().queue('fx', function() {
+          panMap(timeline[moment].bbox);
+          $(this).dequeue();
+        });
+        title.parent().fadeIn(600);
+        title.parent().delay(2000);
+        title.parent().fadeOut(600);
+        title.parent().delay(2000);
+        title.parent().queue('fx', function() {
+          moment++;
+          play();
+          $(this).dequeue();
+        });
+      } else {
+        // after the play loop reset the interface
+        // show app controls
+        $('#moment-drawer').fadeIn();
+        $('#controls').fadeIn();
+
+        // enable map interactivity
+        map.add(mapControls);
+
+      }
+    };
+    play();
+  });
+
 
   /*** Map ***/
 
   // initialize the map
   map = po.map()
-  .container(document.getElementById("map").appendChild(po.svg("svg")))
-  .add(po.interact());
+  .container(document.getElementById("map").appendChild(po.svg("svg")));
+
+  mapControls = po.interact();
+  map.add(mapControls);
 
   map.center({lat: '32.00180605938799', lon: '-99.5679175'}).zoom(3);
-  
+
   tileUrl = "http://{S}tile.cloudmade.com/3ed7d953543745549ec8036186c45f80/37159/256/{Z}/{X}/{Y}.png";
 
   map.add(po.image()
           .url(po.url(tileUrl)
           .hosts(["a.", "b.", "c.", ""])));
 
-  panMap = function(bbox) { // [s,w,n,e]
-
-    // TODO: don't just use the first one, see if there's one nearby to where we're already looking
-
-    // compute the extent in points, scale factor, and center
-    // -- borrowed from map.extent(), thanks Mike
-    var bl = map.locationPoint({ lat: bbox[0], lon: bbox[1] }),
-    tr = map.locationPoint({ lat: bbox[2], lon: bbox[3] }),
-    sizeActual = map.size(),
-    k = Math.max((tr.x - bl.x) / sizeActual.x, (bl.y - tr.y) / sizeActual.y),
-    l = map.pointLocation({x: (bl.x + tr.x) / 2, y: (bl.y + tr.y) / 2});
-
-    // update the zoom level
-    var z = map.zoom() - Math.log(k) / Math.log(2);
-
-    animateCenterZoom(map, l, z);
+  panMap = function(bbox) {
+    Fly(map, bbox);
   };
 
   // sets title from geojson properties
@@ -151,8 +207,18 @@ $(document).ready(function() {
   };
 
 
+  /*** Application Crome and Intial load ***/
+
   // Modal window
   $('.modal').modal({backdrop:false});
+
+  // New Moment tooltip
+  $('#new-moment').tooltip({
+      placement:'left',
+      title: 'Capture a Moment',
+      trigger: 'hover'
+  });
+
 
   client.getJSON('/query/getPlace?terms=[(me:true)]', {limit: 1000}, function(places) {
     // get some places

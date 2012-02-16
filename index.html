@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Moments</title>
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/ui-darkness/jquery-ui.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
 
@@ -16,6 +16,7 @@
           <ul class="nav pull-right">
             <li><a href="#modal" data-toggle="modal">Help</a></li>
           </ul>
+          <a id="play-button" class="btn btn-small btn-info btn-disabled pull-right" href="#">Play</a>
         </div>
       </div>
     </div>
@@ -32,9 +33,9 @@
       <div class="modal-body">
         <p>Use your data to tell a story about the places you've been.</p>
         <ol>
-          <li>The slider at the bottom lets you browse through places in time.</li>
-          <li>You can move the map by dragging and scrolling.</li>
-          <li>Once you've framed the perfect moment click the +</li>
+          <li>The <strong>slider</strong> at the bottom lets you browse through places in <strong>time</strong>.</li>
+          <li>You can move the map by <strong>dragging</strong> and <strong>scrolling</strong>.</li>
+          <li>Once you've <strong>framed</strong> the perfect moment click the <strong>+</strong></li>
         </ol>
       </div>
       <div class="modal-footer">
@@ -42,7 +43,12 @@
       </div>
     </div>
 
-   <div id="map"></div>
+    <div id="playback-title-cont">
+      <h1 id="playback-title"></h1>
+      <h2 id="playback-month"></h2>
+    </div>
+
+    <div id="map"></div>
 
     <div id="controls">
       <div id="slider"></div>
@@ -56,6 +62,7 @@
     <script src="js/bootstrap-popover.js"></script>
     <script src="js/underscore.min.js"></script>
     <script src="js/polymaps.min.js"></script>
+    <script src="js/fly.js"></script>
     <script src="js/moment.js"></script>
     <script src="js/app.js"></script>
  </body>

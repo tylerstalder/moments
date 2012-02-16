@@ -76,19 +76,17 @@ circle {
   background: #288DB1; }
 
 #playback-title-cont {
-  display:none; }
-
-#playback-title {
+  display: none;
   position: absolute;
   width: 100%;
   top: 40%;
   text-align: center; }
 
-#playback-title h1 {
+#playback-title {
   font-size: 60px;
   line-height: 60px;
-  color: #2c2c2c;;
-  text-shadow: #2C2C2C 0 1px 4px;
+  color: #2c2c2c;
+  text-shadow: #2C2C2C 0px 1px 4px;
   -webkit-text-stroke: 1px white;
   font-family: CubanoRegular; }
 
