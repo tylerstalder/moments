@@ -139,7 +139,26 @@ $(document).ready(function() {
   map = po.map()
   .container(document.getElementById("map").appendChild(po.svg("svg")));
 
-  mapControls = po.interact();
+  // build custom map controls form PolyMaps basic interactions
+  // based on po.interact()
+  mapControls = function() {
+    var controls = {},
+    drag = po.drag(),
+    wheel = po.wheel(),
+    dblclick = po.dblclick(),
+    touch = po.touch();
+
+    controls.map = function(x) {
+      drag.map(x);
+      wheel.map(x);
+      dblclick.map(x);
+      touch.map(x);
+      return controls;
+    };
+
+    return controls;
+  }();
+
   map.add(mapControls);
 
   map.center({lat: '32.00180605938799', lon: '-99.5679175'}).zoom(3);
