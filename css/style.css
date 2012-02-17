@@ -37,6 +37,9 @@ circle {
   text-decoration: none;
   line-height: 14px; }
 
+#modal {
+  top: 60%; }
+
 #moment-drawer {
   width: 30px;
   position: absolute;
